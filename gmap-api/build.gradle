@@ -1,0 +1,54 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+        classpath("com.moowork.gradle:gradle-node-plugin:0.13")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'com.moowork.node'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'gs-rest-app.service'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenLocal()
+}
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    configure(allprojects - project(':webui/gmapui')) {
+        apply plugin: 'org.springframework.boot'
+
+        dependencies {
+            compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+            compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+            testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+        }
+    }
+}
+group 'gmap'
+version '1.0-SNAPSHOT'
+
+springBoot {
+    executable = true
+}

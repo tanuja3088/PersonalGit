@@ -1,0 +1,3 @@
+rootProject.name = 'gmap-api'
+include 'webui/gmapui'
+
